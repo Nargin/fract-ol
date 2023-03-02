@@ -1,9 +1,6 @@
 SRC = fract-ol.c
-
 OBJS = $(SRC:.c=.o)
-
 RM = rm -f
-
 NAME = fract-ol
 LMLX = mlx/libmlx.a
 
