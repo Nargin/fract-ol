@@ -91,7 +91,7 @@ int	main(void) {
 			if((newRe * newRe + newIm * newIm) > 4)
 				break;
 			}
-			my_mlx_pixel_put(&img, x, y, 0xFFFFFF);
+			my_mlx_pixel_put(&img, x, y, i * .3);
 		}
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
