@@ -40,9 +40,9 @@ typedef struct	s_window {
 	void	*img;
 	void	*addr;
 	int		bits_per_pixel;
-	int		line_lenght;
+	int		line_length;
 	int		endian;
 	t_var	c;
-}				t_win
+}				t_win;
 
 #endif

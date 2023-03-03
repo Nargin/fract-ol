@@ -6,93 +6,74 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:59:02 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/02 16:15:04 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/03 17:09:39 by robin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+int	pixel_farmer(int x, int y, t_var c)
+{
+	int		i;
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+	i = -1;
+	c.newRe = 1.5 * (x - c.w / 2) / (0.5 * c.zoom * c.w) + c.moveX;
+	c.newIm = (y - c.h / 2) / (0.5 * c.zoom * c.h) + c.moveY;
+	while(++i < 400)
+	{
+		//remember value of previous iteration
+		c.oldRe = c.newRe;
+		c.oldIm = c.newIm;
+		//the actual iteration, the real and imaginary part are calculated
+		c.newRe = c.oldRe * c.oldRe - c.oldIm * c.oldIm + c.cRe;
+		c.newIm = 2 * c.oldRe * c.oldIm + c.cIm;
+		//if the point is outside the circle with radius 2: stop
+		if((c.newRe * c.newRe + c.newIm * c.newIm) > 4)
+			break;
+	}
+	return (i);
+}
+
+void	my_mlx_pixel_put(t_win *data, int x, int y, int color)
 {
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
-/*
-int	main(void)
-{
-	void	*mlx;
-	void	*mlx_win;
-	int	i;
-	int	j = 4;
-	t_data	img;
-
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Fract-ol.jpg");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	while (++j < 500){
-		i = 4;
-		while (++i < 500)
-			my_mlx_pixel_put(&img, j, i, 0xFF0000);
-	}
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
-}*/
 
 int	main(void) {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
-	double	h = 720;
-	double	w = 1280;
-	//each iteration, it calculates: new = old*old + c, where c is a constant and old starts at current pixel
-	double cRe, cIm;           //real and imaginary part of the constant c, determinate shape of the Julia Set
-	double newRe, newIm, oldRe, oldIm;   //real and imaginary parts of new and old
-	double zoom = 1, moveX = 0, moveY = 0; //you can change these to zoom and change position
-	int maxIterations = 300; //after how much iterations the function should stop
+	t_win	img;
+	int		x;
+	int		y;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, w, h, "Fract-ol.jpg");
-	img.img = mlx_new_image(mlx, w, h);
+	img.c.h = 720;
+	img.c.w = 1280;
+
+	//each iteration, it calculates: new = old*old + c, where c is a constant and old starts at current pixel
+	//double cRe, cIm;           //real and imaginary part of the constant c, determinate shape of the Julia Set
+	//double img.c.newRe, img.c.newIm, img.c.oldRe, img.c.oldIm;   //real and imaginary parts of new and old
+
+	img.c.zoom = 1;
+	img.c.moveX = 0;
+	img.c.moveY = 0; //you can change these to zoom and change position
+
+	img.mlx = mlx_init();
+	img.mlx_win = mlx_new_window(img.mlx, img.c.w, img.c.h, "Fract-ol.jpg");
+	img.img = mlx_new_image(img.mlx, img.c.w, img.c.h);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	//pick some values for the constant c, this determines the shape of the Julia Set
-	cRe = -0.7;
-	cIm = 0.27015;
+	img.c.cRe = -0.7;
+	img.c.cIm = 0.27015;
 
 	//loop through every pixel
-	for(int y = 0; y < h; y++)
-		for(int x = 0; x < w; x++)
-		{
-			//calculate the initial real and imaginary part of z, based on the pixel location and zoom and position values
-			newRe = 1.5 * (x - w / 2) / (0.5 * zoom * w) + moveX;
-			newIm = (y - h / 2) / (0.5 * zoom * h) + moveY;
-			//i will represent the number of iterations
-			int i;
-			//start the iteration process
-			for(i = 0; i < maxIterations; i++)
-			{
-			//remember value of previous iteration
-			oldRe = newRe;
-			oldIm = newIm;
-			//the actual iteration, the real and imaginary part are calculated
-			newRe = oldRe * oldRe - oldIm * oldIm + cRe;
-			newIm = 2 * oldRe * oldIm + cIm;
-			//if the point is outside the circle with radius 2: stop
-			if((newRe * newRe + newIm * newIm) > 4)
-				break;
-			}
-			my_mlx_pixel_put(&img, x, y, i * .3);
-		}
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	y = -1;
+	while (++y < img.c.h)
+	{
+		x = -1;
+		while (++x < img.c.w)
+			my_mlx_pixel_put(&img, x, y, pixel_farmer(x, y, img.c) * .3);
+	}
+	mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
+	mlx_loop(img.mlx);
 }
