@@ -45,4 +45,13 @@ typedef struct	s_window {
 	t_var	c;
 }				t_win;
 
+// julia.c
+void	julia(t_win img);
+int	pixel_farmer(int x, int y, t_var c);
+
+
+// fract-ol.c
+void	p_start(char *set);
+void	my_mlx_pixel_put(t_win *data, int x, int y, int color);
+
 #endif

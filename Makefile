@@ -1,4 +1,4 @@
-SRC = fract-ol.c
+SRC = fract-ol.c julia.c
 OBJS = $(SRC:.c=.o)
 RM = rm -f
 NAME = fract-ol
