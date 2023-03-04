@@ -6,17 +6,17 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:59:02 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/04 14:43:49 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/04 18:36:40 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
 
-int	end_p(t_win img)
+int	end_p(t_win w)
 {
-	mlx_destroy_image(img.mlx, img.mlx_win);
-	mlx_destroy_window(img.mlx, img.mlx_win);
-	mlx_loop_end(img.mlx);
+	mlx_destroy_image(w.mlx, w.mlx_win);
+	mlx_destroy_window(w.mlx, w.mlx_win);
+	mlx_loop_end(w.mlx);
 	exit(0);
 }
 
@@ -28,63 +28,64 @@ void	my_mlx_pixel_put(t_win *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int	move(int keycode, t_win *img)
+int	move(int keycode, t_win *w)
 {
 	if (keycode == K_UP)
-		img->c.moveY -= 0.1f / img->c.zoom;
+		w->c.moveY -= 0.1f / w->c.zoom;
 	if (keycode == K_DOWN)
-		img->c.moveY += 0.1f / img->c.zoom;
+		w->c.moveY += 0.1f / w->c.zoom;
 	if (keycode == K_LEFT)
-		img->c.moveX -= 0.1f / img->c.zoom;
+		w->c.moveX -= 0.1f / w->c.zoom;
 	if (keycode == K_RIGHT)
-		img->c.moveX += 0.1f / img->c.zoom;
-	mlx_clear_window(img->mlx, img->mlx_win);
-	if (img->set == 'j')
-		julia(*img);
-	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
+		w->c.moveX += 0.1f / w->c.zoom;
+	mlx_clear_window(w->mlx, w->mlx_win);
+	if (w->set == 'j')
+		julia(*w);
+	mlx_put_image_to_window(w->mlx, w->mlx_win, w->img, 0, 0);
 	return (1);
 }
 
-int	woom(int keycode, int x, int y, t_win *img)
+int	woom(int keycode, int x, int y, t_win *w)
 {
 	(void) x;
 	(void) y;
 	if (keycode == 4)
-		img->c.zoom += .1f;
+		w->c.zoom += .1f;
 	if (keycode == 5)
-		img->c.zoom -= .1f;
-	mlx_clear_window(img->mlx, img->mlx_win);
-	if (img->set == 'j')
-		julia(*img);
-	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
+		w->c.zoom -= .1f;
+	mlx_clear_window(w->mlx, w->mlx_win);
+	if (w->set == 'j')
+		julia(*w);
+	mlx_put_image_to_window(w->mlx, w->mlx_win, w->img, 0, 0);
 	return (1);
 }
 
 void	p_start(char *set)
 {
-	t_win	img;
+	t_win	w;
 
 	// Dimension window
-	img.c.w = 1280;
-	img.c.h = 720;
+	w.c.w = 1280;
+	w.c.h = 720;
 
 	// woom
-	img.c.zoom = 1;
-	img.c.moveX = 0;
-	img.c.moveY = 0;
-	img.set = set[0];
+	w.c.zoom = 1;
+	w.c.moveX = 0;
+	w.c.moveY = 0;
+	w.set = set[0];
 
-	img.mlx = mlx_init();
-	img.mlx_win = mlx_new_window(img.mlx, img.c.w, img.c.h, "Fract-ol");
-	img.img = mlx_new_image(img.mlx, img.c.w, img.c.h);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	if (img.set == 'j')
-		julia(img);
- 	mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
-	mlx_mouse_hook(img.mlx_win, woom, &img);
-	mlx_hook(img.mlx_win, 17, 0, end_p, &img);
-	mlx_key_hook(img.mlx_win, move, &img);
-	mlx_loop(img.mlx);
+	w.mlx = mlx_init();
+	w.mlx_win = mlx_new_window(w.mlx, w.c.w, w.c.h, "Fract-ol");
+	w.img = mlx_new_image(w.mlx, w.c.w, w.c.h);
+	w.addr = mlx_get_data_addr(w.img, &w.bits_per_pixel, &w.line_length, &w.endian);
+	if (w.set == 'j')
+		julia(w);
+ 	mlx_put_image_to_window(w.mlx, w.mlx_win, w.img, 0, 0);
+	mlx_mouse_hook(w.mlx_win, woom, &w);
+	mlx_hook(w.mlx_win, 17, 0, end_p, &w);
+
+	mlx_key_hook(w.mlx_win, move, &w);
+	mlx_loop(w.mlx);
 }
 
 int	main(void)
