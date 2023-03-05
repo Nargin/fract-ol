@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:59:02 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/05 17:53:00 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/05 17:37:03 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,25 @@
 int	move(int keycode, t_prog *prog)
 {
 	if (keycode == K_UP)
-		prog->pos.moveY -= .1f / prog->pos.zoom;
+	{
+		prog->pos.tempY -= 100 / prog->pos.zoom;
+		prog->pos.moveY = prog->pos.tempY * prog->pos.zoom;
+	}
 	if (keycode == K_DOWN)
-		prog->pos.moveY += .1f / prog->pos.zoom;
+	{
+		prog->pos.tempY += 100 / prog->pos.zoom;
+		prog->pos.moveY = prog->pos.tempY * prog->pos.zoom;
+	}
 	if (keycode == K_LEFT)
-		prog->pos.moveX -= .1f / prog->pos.zoom;
+	{
+		prog->pos.tempX -= 100 / prog->pos.zoom;
+		prog->pos.moveX = prog->pos.tempX * prog->pos.zoom;
+	}
 	if (keycode == K_RIGHT)
-		prog->pos.moveX += .1f / prog->pos.zoom;
+	{
+		prog->pos.tempX += 100 / prog->pos.zoom;
+		prog->pos.moveX = prog->pos.tempX * prog->pos.zoom;
+	}
 	mlx_clear_window(prog->win.mlx, prog->win.mlx_win);
 	if (prog->f.set == 'j')
 		julia(prog, prog->win);
@@ -33,9 +45,21 @@ int	woom(int keycode, int x, int y, t_prog *prog)
 {
 	printf("x : %d, y : %d\n", x, y);
 	if (keycode == 4)
-		prog->pos.zoom += .1f;
+	{
+		prog->pos.tempX -= x / prog->pos.zoom;
+		prog->pos.tempY -= y / prog->pos.zoom;
+		prog->pos.zoom /= 2.;
+		prog->pos.moveX = prog->pos.tempX * prog->pos.zoom;
+		prog->pos.moveY = prog->pos.tempY * prog->pos.zoom;
+	}
 	if (keycode == 5)
-		prog->pos.zoom -= .1f;
+	{
+		prog->pos.tempX += x / prog->pos.zoom;
+		prog->pos.tempY += y / prog->pos.zoom;
+		prog->pos.zoom *= 2.;
+		prog->pos.moveX = prog->pos.tempX * prog->pos.zoom;
+		prog->pos.moveY = prog->pos.tempY * prog->pos.zoom;
+	}
 	mlx_clear_window(prog->win.mlx, prog->win.mlx_win);
 	julia(prog, prog->win);
 	mlx_put_image_to_window(prog->win.mlx, prog->win.mlx_win, prog->win.img, 0, 0);

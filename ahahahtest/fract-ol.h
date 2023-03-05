@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 22:03:05 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/05 17:47:45 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/05 16:47:21 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ typedef struct	s_fractal {
 	double	cIm;
 	double	newRe;
 	double	newIm;
-	double	oldRe;
-	double	oldIm;
 	double	temp;
 	char	set;
 }				t_fractal;

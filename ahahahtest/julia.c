@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:01:17 by robin             #+#    #+#             */
-/*   Updated: 2023/03/05 17:48:34 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/05 17:38:28 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,13 @@ int	pixel_farmer(int x, int y, t_prog *prog)
 	t_fractal	f;
 
 	i = -1;
-	f.newRe = 1.5 * (x - prog->pos.w / 2) / (0.5 * prog->pos.zoom * prog->pos.w) + prog->pos.moveX;
-	f.newIm = (y - prog->pos.h / 2) / (0.5 * prog->pos.zoom * prog->pos.h) + prog->pos.moveY;
-	while(++i < 128 && (f.newRe * f.newRe + f.newIm * f.newIm) <= 4)
+	f.newRe = ((x + prog->pos.moveX) / (prog->pos.w * prog->pos.zoom) * 4) - 2;
+	f.newIm = ((y + prog->pos.moveY) / (prog->pos.h * prog->pos.zoom) * 4) - 2;
+	while(++i < MAX && (f.newRe * f.newRe + f.newIm * f.newIm) <= 4)
 	{
-		//remember value of previous iteration
-		f.oldRe = f.newRe;
-		f.oldIm = f.newIm;
-		//the actual iteration, the real and imaginary part are calculated
-		f.newRe = f.oldRe * f.oldRe - f.oldIm * f.oldIm + prog->f.cRe;
-		f.newIm = 2 * f.oldRe * f.oldIm + prog->f.cIm;
+		f.temp = f.newRe * f.newRe - f.newIm * f.newIm + prog->f.cRe;
+		f.newIm = 2 * f.newRe * f.newIm - prog->f.cIm;
+		f.newRe = f.temp;
 	}
 	return (i);
 }
