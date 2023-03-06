@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 22:03:05 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/05 17:47:45 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:00:04 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,14 @@ typedef struct	s_prog {
 void	julia(t_prog *prog, t_win win);
 int	pixel_farmer(int x, int y, t_prog *prog);
 
+// Mandelbrot
+
+// Buddhabrot
+
 // others.c
 int	end_p(t_prog *prog);
 void	my_mlx_pixel_put(t_win *data, int x, int y, int color);
+int		rgb();
 
 // fract-ol.c
 void	p_start(char *set);

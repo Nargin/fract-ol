@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:59:02 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/05 17:53:00 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:27:56 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	woom(int keycode, int x, int y, t_prog *prog)
 {
 	printf("x : %d, y : %d\n", x, y);
 	if (keycode == 4)
-		prog->pos.zoom += .1f;
+		prog->pos.zoom += .1f * prog->pos.w / prog->pos.h;
 	if (keycode == 5)
-		prog->pos.zoom -= .1f;
+		prog->pos.zoom -= .1f * prog->pos.w / prog->pos.h;
 	mlx_clear_window(prog->win.mlx, prog->win.mlx_win);
 	julia(prog, prog->win);
 	mlx_put_image_to_window(prog->win.mlx, prog->win.mlx_win, prog->win.img, 0, 0);
@@ -47,8 +47,8 @@ void	p_start(char *set)
 	t_prog	prog;
 
 	// Dimension window
-	prog.pos.w = 1920;
-	prog.pos.h = 1080;
+	prog.pos.w = 540;
+	prog.pos.h = 540;
 
 	// woom
 	prog.pos.zoom = 1;
@@ -64,8 +64,7 @@ void	p_start(char *set)
 	prog.win.mlx_win = mlx_new_window(prog.win.mlx, prog.pos.w, prog.pos.h, "Fract-ol");
 	prog.win.img = mlx_new_image(prog.win.mlx, prog.pos.w, prog.pos.h);
 	prog.win.addr = mlx_get_data_addr(prog.win.img, &prog.win.bits_per_pixel, &prog.win.line_length, &prog.win.endian);
-	if (prog.f.set == 'j')
-		julia(&prog, prog.win);
+	sun_of_tropique(prog.f.set);
  	mlx_put_image_to_window(prog.win.mlx, prog.win.mlx_win, prog.win.img, 0, 0);
 	mlx_mouse_hook(prog.win.mlx_win, woom, &prog.win);
 	mlx_hook(prog.win.mlx_win, 17, 0, end_p, &prog.win);
