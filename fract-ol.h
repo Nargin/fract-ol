@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 22:03:05 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/07 14:08:02 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/07 18:35:14 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@
 #  define K_LEFT		65361
 #  define K_RIGHT		65363
 #  define ESC			65307
+#  define Z				122
+#  define R				114
+#  define Q				113
 #  define D				100
+#  define C				99
 #  define A				97
 #  define ZM			5
 #  define ZP			4
@@ -45,6 +49,7 @@ typedef struct	s_fractal {
 	double	oldIm;
 	double	temp;
 	char	set;
+	int		color;
 }				t_fractal;
 
 typedef struct	s_variable {
@@ -78,28 +83,29 @@ typedef struct	s_prog {
 /*			Prototype			*/
 
 // julia.c
+int		pixel_farmer(int x, int y, t_prog *prog);
 void	julia(t_prog *prog, t_win win);
-int	pixel_farmer(int x, int y, t_prog *prog);
 
 // mandelbrot.c
-
+int		pixelitito(int x, int y, t_prog *prog);
+void	mandelbrot(t_prog *prog, t_win win);
 
 // buddhabrot.c
 
 
 // input.c
-int	woom(int keycode, int x, int y, t_prog *prog);
-int	input(int keycode, t_prog *prog);
-int	move(int keycode, t_prog *img);
+int		woom(int keycode, int x, int y, t_prog *prog);
+int		input(int keycode, t_prog *prog);
+int		move(int keycode, t_prog *img);
 
 // others.c
 void	my_mlx_pixel_put(t_win *data, int x, int y, int color);
-int	end_p(t_prog *prog);
-int	key(int k, int l);
-int		rgb();
+int		end_p(int k, t_prog *prog);
+int		key(int k, int l);
+int		rgb(int c);
 
 // fract-ol.c
 void	fractal_island(char c, t_prog *prog);
-void	p_start(char *set);
+void	p_start(char set);
 
 #endif

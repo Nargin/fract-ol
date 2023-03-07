@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:59:02 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/07 12:28:56 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/07 18:38:06 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,26 @@ void	fractal_island(char c, t_prog *prog)
 {
 	if (c == 'j')
 		julia(prog, prog->win);
-	//if (c == 'm')
-	//	mandelbrot(prog, prog->win);
+	if (c == 'm')
+		mandelbrot(prog, prog->win);
 	//if (c == 'b')
 	//	buddhabrot(prog, prog->win);
 }
 
-void	p_start(char *set)
+void	p_start(char set)
 {
 	t_prog	prog;
 
 	// Dimension window
-	prog.pos.w = 540;
+	prog.pos.w = 700;
 	prog.pos.h = 540;
 
 	// woom
 	prog.pos.zoom = 1;
 	prog.pos.moveX = 0;
 	prog.pos.moveY = 0;
-	prog.f.set = set[0];
+	prog.f.set = set;
+	prog.f.color = 0x0009EE10;
 
 	// julia
 	prog.f.cIm = 0;
@@ -45,7 +46,6 @@ void	p_start(char *set)
 	prog.win.img = mlx_new_image(prog.win.mlx, prog.pos.w, prog.pos.h);
 	prog.win.addr = mlx_get_data_addr(prog.win.img, &prog.win.bits_per_pixel, &prog.win.line_length, &prog.win.endian);
 	fractal_island(prog.f.set, &prog);
- 	mlx_put_image_to_window(prog.win.mlx, prog.win.mlx_win, prog.win.img, 0, 0);
 	mlx_mouse_hook(prog.win.mlx_win, woom, &prog.win);
 	mlx_hook(prog.win.mlx_win, 17, 0, end_p, &prog.win);
 	mlx_key_hook(prog.win.mlx_win, input, &prog.win);
@@ -54,6 +54,6 @@ void	p_start(char *set)
 
 int	main(void)
 {
-	p_start("j");
+	p_start('j');
 	return (0);
 }
