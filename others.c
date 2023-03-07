@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:17:49 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/06 17:59:25 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/07 14:07:04 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ void	my_mlx_pixel_put(t_win *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+int	key(int k, int l)
+{
+	return (k == l);
+}
 
 double pardon(double t_, double s_)
 {
