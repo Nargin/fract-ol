@@ -6,15 +6,26 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:17:49 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/07 18:24:09 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/07 18:56:27 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
 
-int	rgb(int c)
+void	zero_is_bad(t_prog *prog)
 {
-	return (c << 24 | c << 16 | c << 8 | c);
+	if (prog->f.color == 0x0009EE10)
+		prog->f.color = 0x00EE4709;
+	else if (prog->f.color == 0x00EE4709)
+		prog->f.color = 0x0009EEE7;
+	else if (prog->f.color == 0x0009EEE7)
+		prog->f.color = 0x00EE0982;
+	else if (prog->f.color == 0x00EE0982)
+		prog->f.color = 0x009C31EA;
+	else if (prog->f.color == 0x009C31EA)
+		prog->f.color = 0x000FAF77;
+	else if (prog->f.color == 0x000FAF77)
+		prog->f.color = 0x0009EE10;
 }
 
 void	my_mlx_pixel_put(t_win *data, int x, int y, int color)
@@ -30,7 +41,7 @@ int	key(int k, int l)
 	return (k == l);
 }
 
-double pardon(double t_, double s_)
+double	pardon(double t_, double s_)
 {
 	return (pow(t_, -s_));
 }

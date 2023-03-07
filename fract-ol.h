@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 22:03:05 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/07 18:35:14 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/07 18:56:21 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,17 @@ void	mandelbrot(t_prog *prog, t_win win);
 
 // input.c
 int		woom(int keycode, int x, int y, t_prog *prog);
+void	change_reality(int keycode, t_prog *prog);
 int		input(int keycode, t_prog *prog);
 int		move(int keycode, t_prog *img);
+int		end_p(t_prog *prog);
 
 // others.c
 void	my_mlx_pixel_put(t_win *data, int x, int y, int color);
-int		end_p(int k, t_prog *prog);
+double 	pardon(double t_, double s_);
+void	zero_is_bad(t_prog *prog);
 int		key(int k, int l);
-int		rgb(int c);
+double	aad(char *s);
 
 // fract-ol.c
 void	fractal_island(char c, t_prog *prog);
