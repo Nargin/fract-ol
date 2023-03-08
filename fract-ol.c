@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:59:02 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/07 18:50:12 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/08 21:53:28 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	fractal_island(char c, t_prog *prog)
 		julia(prog, prog->win);
 	if (c == 'm')
 		mandelbrot(prog, prog->win);
-	//if (c == 'b')
-	//	buddhabrot(prog, prog->win);
+	if (c == 'b')
+		buddhabrot(prog, prog->win);
 }
 
 void	p_start(char set)
@@ -54,6 +54,6 @@ void	p_start(char set)
 
 int	main(void)
 {
-	p_start('j');
+	p_start('b');
 	return (0);
 }

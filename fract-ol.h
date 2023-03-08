@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 22:03:05 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/07 18:56:21 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/08 21:53:21 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ int		pixelitito(int x, int y, t_prog *prog);
 void	mandelbrot(t_prog *prog, t_win win);
 
 // buddhabrot.c
-
+//int	full_w_superior(int x, int y);
+void	buddhabrot(t_prog *prog, t_win win);
 
 // input.c
 int		woom(int keycode, int x, int y, t_prog *prog);

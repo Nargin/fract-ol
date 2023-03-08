@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 14:28:02 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/07 18:32:26 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/08 19:34:52 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	mandelbrot(t_prog *prog, t_win win)
 		x = -1;
 		while (++x < prog->pos.w)
     	{
-			my_mlx_pixel_put(&win, x, y, pixelitito(x, y, prog) * 5);
+			my_mlx_pixel_put(&win, x, y, prog->f.color * pixelitito(x, y, prog));
 			if (pixelitito(x, y, prog) >= MAX)
-			 	my_mlx_pixel_put(&win, x, y, prog->f.color);
+			 	my_mlx_pixel_put(&win, x, y, 0);
 		}
 	}
 }

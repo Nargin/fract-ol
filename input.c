@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:14:01 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/07 18:54:59 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/08 20:14:36 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,26 @@ int	move(int keycode, t_prog *prog)
 
 int	woom(int keycode, int x, int y, t_prog *prog)
 {
-	(void) x;
-	(void) y;
+	double pre_zoom_x;
+	double pre_zoom_y;
+	double post_zoom_x;
+	double post_zoom_y;
+
 	if (keycode == ZP)
 	{
-		
+		pre_zoom_x = (x - (double)prog->pos.w / 2) / prog->pos.zoom - prog->pos.moveX;
+		pre_zoom_y = (y - (double)prog->pos.h / 2) / prog->pos.zoom - prog->pos.moveY;
 		prog->pos.zoom *= 1.25f;
-
+		post_zoom_x = (x - (double)prog->pos.w / 2) / prog->pos.zoom - prog->pos.moveX;
+		post_zoom_y = (y - (double)prog->pos.h / 2) / prog->pos.zoom - prog->pos.moveY;
+		prog->pos.moveX += (post_zoom_x - pre_zoom_x) * prog->pos.zoom / 1.25f;
+		prog->pos.moveY += (post_zoom_y - pre_zoom_y) * prog->pos.zoom / 1.25f;
 	}
 	if (keycode == ZM)
 	{
-
+		prog->pos.zoom /= 1.25f;
 	}
-	printf("zoom : %Lf\n", prog->pos.zoom);
+	//printf("zoom : %Lf\n", prog->pos.zoom);
 	mlx_clear_window(prog->win.mlx, prog->win.mlx_win);
 	fractal_island(prog->f.set, prog);
 	mlx_put_image_to_window(prog->win.mlx, prog->win.mlx_win, prog->win.img, 0, 0);
