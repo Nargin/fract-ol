@@ -1,57 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   burningship.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 14:28:02 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/09 11:45:03 by romaurel         ###   ########.fr       */
+/*   Created: 2023/03/08 17:11:29 by romaurel          #+#    #+#             */
+/*   Updated: 2023/03/09 11:39:07 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
 
-int	pixelitito(int x, int y, t_prog *prog)
+int sea_of_pixels(int x, int y, t_prog *prog)
 {
-	int 		i;
 	t_fractal	f;
-	double		pr;
-	double		pi;
+	int			i;
 
-	i = -1;
 	f.newRe = 0;
 	f.newIm = 0;
-    pr = 1.5 * (x - prog->pos.w / 2) / (0.5 * prog->pos.zoom * prog->pos.w) + prog->pos.moveX;
-    pi = (y - prog->pos.h / 2) / (0.5 * prog->pos.zoom * prog->pos.h) + prog->pos.moveY;
+	i = -1;
+	f.cRe = x / (prog->pos.w * prog->pos.zoom)
+		* 2.47 - 1.5 + prog->pos.moveX;
+	f.cIm = y / (prog->pos.h * prog->pos.zoom)
+		* 2.24 - 1.12 + prog->pos.moveY;
 	while (++i < MAX && (f.newRe * f.newRe + f.newIm * f.newIm) < 4)
 	{
-		//remember value of previous iteration
 		f.oldRe = f.newRe;
 		f.oldIm = f.newIm;
-		//the actual iteration, the real and imaginary part are calculated
-		f.newRe = f.oldRe * f.oldRe - f.oldIm * f.oldIm + pr;
-		f.newIm = 2 * f.oldRe * f.oldIm + pi;
-		//if the point is outside the circle with radius 2: stop
+		f.newRe = f.oldRe * f.oldRe - f.oldIm * f.oldIm + f.cRe;
+		f.newIm = 2 * fabs(f.oldRe * f.oldIm) + f.cIm;
 	}
 	return (i);
 }
 
-void	mandelbrot(t_prog *prog, t_win win)
+void    burningship(t_prog *prog, t_win win)
 {
-	int	y;
-	int	x;
-	int	i;
+	int x;
+	int y;
+	int i;
 
 	y = -1;
-    while (++y < prog->pos.h)
-    {
+	while (++y < prog->pos.h)
+	{
 		x = -1;
 		while (++x < prog->pos.w)
-    	{
-			i = pixelitito(x, y, prog);
+		{
+			i = sea_of_pixels(x, y, prog);
 			if (i == MAX)
-			 	my_mlx_pixel_put(&win, x, y, 0);
+				my_mlx_pixel_put(&win, x, y, 0x000000);
 			else
 				my_mlx_pixel_put(&win, x, y, i * prog->f.color);
 		}

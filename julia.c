@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:01:17 by robin             #+#    #+#             */
-/*   Updated: 2023/03/08 20:59:05 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/09 11:22:16 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	julia(t_prog *prog, t_win win)
 {
 	int		x;
 	int		y;
+	int		i;
 
 	y = -1;
 	while (++y < prog->pos.h)
@@ -43,10 +44,11 @@ void	julia(t_prog *prog, t_win win)
 		x = -1;
 		while (++x < prog->pos.w)
 		{
-			my_mlx_pixel_put(&win, x, y, 
-				prog->f.color / MAX * pixel_farmer(x, y, prog));
-			if (pixel_farmer(x, y, prog) == MAX)
+			i = pixel_farmer(x, y, prog);
+			if (i == MAX)
 				my_mlx_pixel_put(&win, x, y, 0);
+			else
+				my_mlx_pixel_put(&win, x, y, prog->f.color * i);
 		}
 	}
 }

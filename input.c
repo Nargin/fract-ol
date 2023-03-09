@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:14:01 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/08 20:14:36 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/09 16:08:29 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,29 @@ int	move(int keycode, t_prog *prog)
 
 int	woom(int keycode, int x, int y, t_prog *prog)
 {
-	double pre_zoom_x;
-	double pre_zoom_y;
-	double post_zoom_x;
-	double post_zoom_y;
-
 	if (keycode == ZP)
 	{
-		pre_zoom_x = (x - (double)prog->pos.w / 2) / prog->pos.zoom - prog->pos.moveX;
-		pre_zoom_y = (y - (double)prog->pos.h / 2) / prog->pos.zoom - prog->pos.moveY;
+		// (void) x;
+		// (void) y;
+		// convertir la position de la souris en une position sur la fractale
+		double newPosX = prog->f.cRe + (x - prog->pos.w / 2.0) / (0.5 * prog->pos.zoom * prog->pos.w) + prog->pos.moveX;
+		double newPosY = prog->f.cIm + (y - prog->pos.h / 2.0) / (0.5 * prog->pos.zoom * prog->pos.h) + prog->pos.moveY;
+
 		prog->pos.zoom *= 1.25f;
-		post_zoom_x = (x - (double)prog->pos.w / 2) / prog->pos.zoom - prog->pos.moveX;
-		post_zoom_y = (y - (double)prog->pos.h / 2) / prog->pos.zoom - prog->pos.moveY;
-		prog->pos.moveX += (post_zoom_x - pre_zoom_x) * prog->pos.zoom / 1.25f;
-		prog->pos.moveY += (post_zoom_y - pre_zoom_y) * prog->pos.zoom / 1.25f;
+		prog->pos.moveX += prog->f.cRe - newPosX;
+		prog->pos.moveY += prog->f.cIm - newPosY;
+		// prog->f.cRe = newPosX;
+		// prog->f.cIm = newPosY;
+		// printf("x: %Lf y: %Lf\n", prog->pos.moveX, prog->pos.moveY);
+		// double cursor_re = x / prog->pos.zoom + prog->pos.moveX;
+		// double cursor_im = y / prog->pos.zoom + prog->pos.moveY;
+		// prog->pos.zoom *= 1.25f;
+		// prog->pos.moveX = (cursor_re - (cursor_re - prog->pos.moveX)) * 1.25f;
+		// prog->pos.moveY = (cursor_im - (cursor_im - prog->pos.moveY)) * 1.25f;
+		// printf("x: %Lf y: %Lf\n", prog->pos.moveX, prog->pos.moveY);
 	}
 	if (keycode == ZM)
-	{
 		prog->pos.zoom /= 1.25f;
-	}
-	//printf("zoom : %Lf\n", prog->pos.zoom);
 	mlx_clear_window(prog->win.mlx, prog->win.mlx_win);
 	fractal_island(prog->f.set, prog);
 	mlx_put_image_to_window(prog->win.mlx, prog->win.mlx_win, prog->win.img, 0, 0);
