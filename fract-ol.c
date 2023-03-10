@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:59:02 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/09 15:41:16 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:47:45 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	p_start(char set)
 	prog.f.color = 0x0009EE10;
 
 	// julia
-	prog.f.cIm = 0;
 	prog.f.cRe = -1.476;
+	prog.f.cIm = 0;
 
 	prog.win.mlx = mlx_init();
 	prog.win.mlx_win = mlx_new_window(prog.win.mlx, prog.pos.w, prog.pos.h, "Fract-ol");
@@ -58,8 +58,8 @@ void	p_start(char set)
 	mlx_loop(prog.win.mlx);
 }
 
-int	main(void)
+int	main(int ac, char *av[])
 {
-	p_start('m');
+	if (ac < 2 && ac > 4)
 	return (0);
 }

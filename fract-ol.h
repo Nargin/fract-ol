@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 22:03:05 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/09 11:05:58 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:46:54 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct	s_prog {
 /*			Prototype			*/
 
 // julia.c
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		pixel_farmer(int x, int y, t_prog *prog);
 void	julia(t_prog *prog, t_win win);
 

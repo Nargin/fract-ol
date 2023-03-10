@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:14:01 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/09 16:08:29 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/10 12:16:13 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,18 @@ int	move(int keycode, t_prog *prog)
 
 int	woom(int keycode, int x, int y, t_prog *prog)
 {
+	printf("x:%d, y:%d\n", x, y);
 	if (keycode == ZP)
 	{
-		// (void) x;
-		// (void) y;
 		// convertir la position de la souris en une position sur la fractale
-		double newPosX = prog->f.cRe + (x - prog->pos.w / 2.0) / (0.5 * prog->pos.zoom * prog->pos.w) + prog->pos.moveX;
-		double newPosY = prog->f.cIm + (y - prog->pos.h / 2.0) / (0.5 * prog->pos.zoom * prog->pos.h) + prog->pos.moveY;
+		// double newPosX = prog->f.cRe + (x - prog->pos.w / 2.0) / (0.5 * prog->pos.zoom * prog->pos.w) + prog->pos.moveX;
+		// double newPosY = prog->f.cIm + (y - prog->pos.h / 2.0) / (0.5 * prog->pos.zoom * prog->pos.h) + prog->pos.moveY;
 
 		prog->pos.zoom *= 1.25f;
-		prog->pos.moveX += prog->f.cRe - newPosX;
-		prog->pos.moveY += prog->f.cIm - newPosY;
-		// prog->f.cRe = newPosX;
-		// prog->f.cIm = newPosY;
-		// printf("x: %Lf y: %Lf\n", prog->pos.moveX, prog->pos.moveY);
-		// double cursor_re = x / prog->pos.zoom + prog->pos.moveX;
-		// double cursor_im = y / prog->pos.zoom + prog->pos.moveY;
-		// prog->pos.zoom *= 1.25f;
-		// prog->pos.moveX = (cursor_re - (cursor_re - prog->pos.moveX)) * 1.25f;
-		// prog->pos.moveY = (cursor_im - (cursor_im - prog->pos.moveY)) * 1.25f;
-		// printf("x: %Lf y: %Lf\n", prog->pos.moveX, prog->pos.moveY);
+		// prog->pos.moveX += (prog->f.cRe - newPosX) * 1.25f;
+		// prog->pos.moveY += (prog->f.cIm - newPosY) * 1.25f;
+		// if (x > prog->pos.w / 2)
+
 	}
 	if (keycode == ZM)
 		prog->pos.zoom /= 1.25f;
@@ -76,7 +68,6 @@ void	change_reality(int keycode, t_prog *prog)
 }
 int	input(int k, t_prog *prog)
 {
-	// printf("%d\n", k);
 	if (k >= K_LEFT && k <= K_DOWN)
 		move(k, prog);
 	if (key(k, A) || key(k, D))

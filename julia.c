@@ -6,11 +6,23 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:01:17 by robin             #+#    #+#             */
-/*   Updated: 2023/03/09 11:22:16 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:45:03 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract-ol.h"
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	int	i;
+
+	i = 0;
+	while (((char *)s1)[i] && ((char *)s1)[i] == ((char *)s2)[i] && n--)
+		i++;
+	if (!n)
+		return (0);
+	return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
+}
 
 int	pixel_farmer(int x, int y, t_prog *prog)
 {
