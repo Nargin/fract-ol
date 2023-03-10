@@ -12,23 +12,37 @@
 
 #include "fract-ol.h"
 
+void	putstr(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		write(1, &s[i++], 1);
+}
+
+char	*tolower(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+		if (s[i] >= 'A' && s[i] <= 'Z')
+			s[i] += 32;
+	return (s);
+}
+
 void	fractal_island(char c, t_prog *prog)
 {
 	if (c == 'j')
-	{
 		julia(prog, prog->win);
-	}
 	if (c == 'm')
-	{
 		mandelbrot(prog, prog->win);
-	}
 	if (c == 'b')
-	{
 		burningship(prog, prog->win);
-	}
 }
 
-void	p_start(char set)
+void	p_start(char set, double re, double im)
 {
 	t_prog	prog;
 
@@ -44,8 +58,8 @@ void	p_start(char set)
 	prog.f.color = 0x0009EE10;
 
 	// julia
-	prog.f.cRe = -1.476;
-	prog.f.cIm = 0;
+	prog.f.cRe = re;
+	prog.f.cIm = im;
 
 	prog.win.mlx = mlx_init();
 	prog.win.mlx_win = mlx_new_window(prog.win.mlx, prog.pos.w, prog.pos.h, "Fract-ol");
@@ -60,6 +74,12 @@ void	p_start(char set)
 
 int	main(int ac, char *av[])
 {
-	if (ac < 2 && ac > 4)
-	return (0);
+	if (ac < 2 && ac > 5)
+		return (putstr(ERROR), -1);
+	if (!ft_strncmp(tolower(av[1]), "julia", 5))
+	{
+		if (ac != 4)
+			return (putstr(ERROR), -1);
+		
+	}
 }
