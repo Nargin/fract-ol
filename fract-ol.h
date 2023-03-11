@@ -25,6 +25,7 @@
 # endif
 
 # define ERROR "./fractol 'julia' {x value} {y value}\n./fractol 'mandelbrot'\n./fractol 'burninship'\nOptional : compile with -D 'MAX' iteration\n"
+
 // KEYS : 
 #  define K_UP			65362
 #  define K_DOWN		65364

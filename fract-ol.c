@@ -21,7 +21,7 @@ void	putstr(char *s)
 		write(1, &s[i++], 1);
 }
 
-char	*tolower(char *s)
+char	*tolow(char *s)
 {
 	int	i;
 
@@ -76,10 +76,15 @@ int	main(int ac, char *av[])
 {
 	if (ac < 2 && ac > 5)
 		return (putstr(ERROR), -1);
-	if (!ft_strncmp(tolower(av[1]), "julia", 5))
+	if (!ft_strncmp(tolow(av[1]), "julia", 5))
 	{
 		if (ac != 4)
 			return (putstr(ERROR), -1);
-		
+		p_start('j', aad(av[2]), aad(av[3]));
 	}
+	if (!ft_strncmp(tolow(av[1]), "mandelbrot", 11))
+		p_start('m', 0, 0);
+	if (!ft_strncmp(tolow(av[1]), "burningship", 12))
+		p_start('b', 0, 0);
+	return (0);
 }
