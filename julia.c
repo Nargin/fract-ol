@@ -6,11 +6,11 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 22:01:17 by robin             #+#    #+#             */
-/*   Updated: 2023/03/11 10:02:20 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/11 12:05:12 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fract-ol.h"
+#include "fractol.h"
 
 int	ft_strncmp(char *s1, char *s2, size_t n)
 {
@@ -30,16 +30,16 @@ int	pixel_farmer(int x, int y, t_prog *prog)
 	t_fractal	f;
 
 	i = -1;
-	f.newRe = 1.5 * (x - prog->pos.w / 2) / (0.5 * prog->pos.zoom * prog->pos.w) + prog->pos.moveX;
-	f.newIm = (y - prog->pos.h / 2) / (0.5 * prog->pos.zoom * prog->pos.h) + prog->pos.moveY;
-	while(++i < 128 && (f.newRe * f.newRe + f.newIm * f.newIm) <= 4)
+	f.newre = 1.5 * (x - prog->pos.w / 2) / (0.5 * prog->pos.zoom * prog->pos.w)
+		+ prog->pos.movex;
+	f.newim = (y - prog->pos.h / 2) / (0.5 * prog->pos.zoom * prog->pos.h)
+		+ prog->pos.movey;
+	while (++i < 128 && (f.newre * f.newre + f.newim * f.newim) <= 4)
 	{
-		//remember value of previous iteration
-		f.oldRe = f.newRe;
-		f.oldIm = f.newIm;
-		//the actual iteration, the real and imaginary part are calculated
-		f.newRe = f.oldRe * f.oldRe - f.oldIm * f.oldIm + prog->f.cRe;
-		f.newIm = 2 * f.oldRe * f.oldIm + prog->f.cIm;
+		f.oldre = f.newre;
+		f.oldim = f.newim;
+		f.newre = f.oldre * f.oldre - f.oldim * f.oldim + prog->f.cre;
+		f.newim = 2 * f.oldre * f.oldim + prog->f.cim;
 	}
 	return (i);
 }

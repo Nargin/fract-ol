@@ -3,6 +3,7 @@ OBJS = $(SRC:.c=.o)
 RM = rm -f
 NAME = fract-ol
 LMLX = mlx/libmlx.a
+gcc= gcc -Wall -Werror -Wextra
 
 all : ${LMLX} $(NAME)
 
@@ -10,10 +11,10 @@ ${LMLX}:
 		make -C mlx/ all
 
 .c.o:
-		gcc -Wall -Werror -Wextra -Lmlx/ -lmlx -L/usr/lib/ -lXext -lX11 -lm -I ./ -I ./mlx/ -c $< -o $(<:.c=.o)
+		$(gcc) -Lmlx/ -lmlx -L/usr/lib/ -lXext -lX11 -lm -I ./ -I ./mlx/ -c $< -o $(<:.c=.o)
 
 $(NAME) :	$(OBJS)
-		gcc -Wall -Werror -Wextra ${OBJS} -Lmlx/ -lmlx -L/usr/lib/ -lXext -lX11 -lm -I./ -I./mlx/ -o ${NAME}
+		$(gcc) ${OBJS} -Lmlx/ -lmlx -L/usr/lib/ -lXext -lX11 -lm -I./ -I./mlx/ -o ${NAME}
 
 clean :
 		$(RM) $(OBJS)

@@ -6,11 +6,11 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:17:49 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/08 12:25:55 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/11 12:05:22 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fract-ol.h"
+#include "fractol.h"
 
 void	zero_is_bad(t_prog *prog)
 {
@@ -33,7 +33,7 @@ void	my_mlx_pixel_put(t_win *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
 int	key(int k, int l)
@@ -51,7 +51,7 @@ double	aad(char *s)
 	double	g;
 	int		i;
 	double	n;
-	double  c;
+	double	c;
 
 	g = 1;
 	i = 0;
