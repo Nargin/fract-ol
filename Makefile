@@ -8,7 +8,7 @@ NAME = fractol
 
 LMLX = mlx/libmlx.a
 
-gcc= gcc -Wall -Werror -Wextra
+gcc= gcc -Wall -Werror -Wextra #-D MAX=128 #-D ZOF=0 -D H=700 -D W=540
 
 all : ${LMLX} $(NAME)
 

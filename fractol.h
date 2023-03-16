@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 22:03:05 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/11 13:27:20 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:45:05 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,12 @@
 #  define MAX 128
 # endif
 
-# ifndef H
-#  define H 540
-# endif
-
-# ifndef W
-#  define W 700
-# endif
-
-# ifndef ZOF
-#  define ZOF 1
-# endif
-
 // Error string : 
 # define ERROR "./fractol 'julia' {x value} {y value}\n\
 ./fractol 'mandelbrot'\n\
-./fractol 'burninship' (bonus fractal)\n\
+./fractol 'burningship' (bonus fractal)\n\
 *~ Optional ~*\n\
-compile with -D : \n\
-- 'MAX' iteration\n\
+add argument(s) after fractal name (must be in order): \n\
 - 'W' width window\n\
 - 'H' height window\n\
 - 'ZOF' zoom follow cursor position\n"
@@ -84,6 +71,8 @@ typedef struct s_variable {
 	long double	tempy;
 	double		w;
 	double		h;
+	int			zof;
+	int			i;
 }				t_var;
 
 typedef struct s_win {
@@ -111,6 +100,8 @@ int		pixel_farmer(int x, int y, t_prog *prog);
 void	julia(t_prog *prog, t_win win);
 
 // mandelbrot.c
+int		defjulia(t_var *def, int ac, char *av[], int i);
+int		define(t_var *def, int ac, char *av[], int i);
 int		pixelitito(int x, int y, t_prog *prog);
 void	mandelbrot(t_prog *prog, t_win win);
 
@@ -133,8 +124,8 @@ int		key(int k, int l);
 double	aad(char *s);
 
 // fract-ol.c
-void	p_start(char set, double re, double im);
 void	fractal_island(char c, t_prog *prog);
+void	p_start(char set, t_var def);
 void	putstr(char *s);
 char	*tolow(char *s);
 

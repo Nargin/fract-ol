@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:14:01 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/11 13:00:04 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/13 16:37:45 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	woom(int keycode, int x, int y, t_prog *prog)
 	if (keycode == ZP)
 	{
 		prog->pos.zoom *= 1.25f;
-		if (ZOF == 1)
+		if (prog->pos.zof == 1)
 		{
 			if (x >= prog->pos.w / 2)
 				prog->pos.movex += .15f / prog->pos.zoom;

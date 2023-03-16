@@ -6,11 +6,41 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 14:28:02 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/11 12:07:25 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/16 15:58:17 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+int	defjulia(t_var *def, int ac, char *av[], int i)
+{
+	if (ac < 4 || ac > 7)
+		return (0);
+	if (i < ac)
+		def->movex = aad(av[i++]);
+	if (i < ac)
+		def->movey = aad(av[i++]);
+	if (i < ac)
+		def->w = aad(av[i++]);
+	if (i < ac)
+		def->h = aad(av[i++]);
+	if (i < ac)
+		def->zof = aad(av[i]);
+	return (1);
+}
+
+int	define(t_var *def, int ac, char *av[], int i)
+{
+	if (ac > 5)
+		return (0);
+	if (i < ac)
+		def->w = aad(av[i++]);
+	if (i < ac)
+		def->h = aad(av[i++]);
+	if (i < ac)
+		def->zof = aad(av[i]);
+	return (1);
+}
 
 int	pixelitito(int x, int y, t_prog *prog)
 {

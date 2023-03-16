@@ -6,7 +6,7 @@
 /*   By: romaurel <romaurel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 21:59:02 by romaurel          #+#    #+#             */
-/*   Updated: 2023/03/11 12:09:06 by romaurel         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:01:37 by romaurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,20 @@ void	fractal_island(char c, t_prog *prog)
 		burningship(prog, prog->win);
 }
 
-void	p_start(char set, double re, double im)
+void	p_start(char set, t_var def)
 {
 	t_prog	prog;
 
-	prog.pos.w = W;
-	prog.pos.h = H;
+	prog.pos.w = def.w;
+	prog.pos.h = def.h;
 	prog.pos.zoom = 1;
 	prog.pos.movex = 0;
 	prog.pos.movey = 0;
+	prog.pos.zof = def.zof;
 	prog.f.set = set;
 	prog.f.color = 0x0009EE10;
-	prog.f.cre = re;
-	prog.f.cim = im;
+	prog.f.cre = def.movex;
+	prog.f.cim = def.movey;
 	prog.win.mlx = mlx_init();
 	prog.win.mlx_win = mlx_new_window(prog.win.mlx, prog.pos.w,
 			prog.pos.h, "Fract-ol");
@@ -73,19 +74,28 @@ void	p_start(char set, double re, double im)
 
 int	main(int ac, char *av[])
 {
-	if (ac < 2 || ac > 5)
-		return (putstr(ERROR), -1);
-	if (!ft_strncmp(tolow(av[1]), "julia", 5))
+	t_var	def;
+
+	if (ac < 2 || ac > 7)
+		return (putstr(ERROR), 0);
+	def.i = 1;
+	def.w = 700;
+	def.h = 540;
+	def.zof = 1;
+	if (!ft_strncmp(tolow(av[def.i]), "julia", 5))
 	{
-		if (ac != 4)
-			return (putstr(ERROR), -1);
-		p_start('j', aad(av[2]), aad(av[3]));
+		if (defjulia(&def, ac, av, ++def.i))
+			p_start('j', def);
 	}
-	if (!ft_strncmp(tolow(av[1]), "mandelbrot", 10))
-		p_start('m', 0, 0);
-	if (!ft_strncmp(tolow(av[1]), "burningship", 11))
-		p_start('b', 0, 0);
-	else
-		putstr(ERROR);
-	return (1);
+	else if (!ft_strncmp(tolow(av[def.i]), "mandelbrot", 10))
+	{
+		if (define(&def, ac, av, ++def.i))
+			p_start('m', def);
+	}
+	else if (!ft_strncmp(tolow(av[def.i]), "burningship", 11))
+	{
+		if (define(&def, ac, av, ++def.i))
+			p_start('b', def);
+	}
+	return (putstr(ERROR), 0);
 }
